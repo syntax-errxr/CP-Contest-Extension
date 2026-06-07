@@ -1,0 +1,20 @@
+Frontend:
+React + TypeScript
+
+Extension:
+Chrome Extension Manifest V3
+
+Backend:
+FastAPI
+
+Database:
+PostgreSQL
+
+Cache:
+Redis
+
+Deployment:
+Docker + Railway
+
+Auth:
+Google OAuth
