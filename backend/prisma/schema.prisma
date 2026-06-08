@@ -1,0 +1,62 @@
+datasource db {
+  provider = "sqlite" // prisma db push will sync with local test.db. When deploying to postgres, we configure the provider or DATABASE_URL env
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  isActive  Boolean    @default(true) @map("is_active")
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+
+  links          PlatformLink[]
+  participations UserContestParticipation[]
+  solvedProblems SolvedProblem[]
+}
+
+model PlatformLink {
+  id            Int      @id @default(autoincrement())
+  userId        String   @map("user_id")
+  platform      String   // "codeforces", "leetcode", "atcoder", "codechef"
+  username      String
+  currentRating Int?     @map("current_rating")
+  linkedAt      DateTime @default(now()) @map("linked_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, platform])
+}
+
+model Contest {
+  id              String   @id // e.g. "codeforces-1234"
+  name            String
+  platform        String
+  startTime       DateTime @map("start_time")
+  durationSeconds Int      @map("duration_seconds")
+  url             String
+  status          String   // "upcoming", "completed"
+
+  participations UserContestParticipation[]
+}
+
+model UserContestParticipation {
+  id               Int    @id @default(autoincrement())
+  userId           String @map("user_id")
+  contestId        String @map("contest_id")
+  rank             Int
+  ratingDelta      Int    @map("rating_delta")
+  upsolveCompleted Float  @default(0.0) @map("upsolve_completed")
+  problemsTotal    Int?   @map("problems_total")
+  problemsUpsolved Int?   @map("problems_upsolved")
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contest Contest @relation(fields: [contestId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, contestId])
+}
+
