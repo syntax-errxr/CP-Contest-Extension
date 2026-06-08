@@ -1,4 +1,4 @@
-# ⚡ CP Extension (Competitive Programming Dashboard)
+# CP Extension (Competitive Programming Dashboard)
 
 A unified browser extension dashboard for competitive programmers to track ratings, contest schedules, and upsolving progress across multiple platforms (Codeforces, LeetCode, AtCoder, and CodeChef).
 
@@ -10,10 +10,10 @@ This project features a lightweight **TypeScript Express** backend connected to 
 
 *   **Zero-Login Setup**: Directly opens to your dashboard. All actions are handled under a single local user profile.
 *   **Multi-Platform Stats**: Link and track your handle profiles on:
-    *   Codeforces (Rating, Rank, Rating Change, Problems Upsolved)
-    *   LeetCode (Rating, Rank, Topics completed)
-    *   AtCoder (Rating, Rank, Delta)
-    *   CodeChef (Rating, Stars, Rank, Deltas)
+    *   Codeforces (Rating, Rank, Rating Change)
+    *   LeetCode (Rating, Rank)
+    *   AtCoder (Rating, Rank)
+    *   CodeChef (Rating, Stars, Rank)
 *   **Contest Scheduler**: Automatically pulls upcoming contests from all platforms.
 *   **🔔 Desktop Alarms**: Click the bell next to any upcoming contest to schedule a Windows notification sound/toast 5 minutes before it starts. Clicking the notification opens the contest page.
 *   **🔄 Force Sync**: Click "Sync Now" to fetch live ratings and contest updates immediately (with a 3-minute cooldown to prevent API rate-limiting).
