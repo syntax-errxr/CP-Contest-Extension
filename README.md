@@ -1,23 +1,80 @@
 # CP Extension (Competitive Programming Dashboard)
 
-A unified browser extension dashboard for competitive programmers to track ratings, contest schedules, and upsolving progress across multiple platforms (Codeforces, LeetCode, AtCoder, and CodeChef).
+A unified, local browser extension dashboard for competitive programmers. Track ratings, contest schedules, solved topics, and upsolving progress across multiple platforms (**Codeforces, LeetCode, AtCoder, and CodeChef**) in one clean interface.
 
-This project features a lightweight **TypeScript Express** backend connected to an **SQLite** database via **Prisma**, and a modern **React + Vite** frontend compiled as a Manifest V3 Chrome Extension. No accounts or logins are necessary; it runs locally and seamlessly.
+No online accounts, cloud logins, or complex database setups are necessary—it runs entirely on your local machine.
 
 ---
 
 ## 🚀 Features
 
-*   **Zero-Login Setup**: Directly opens to your dashboard. All actions are handled under a single local user profile.
+*   **Zero-Login Setup**: Directly opens to your dashboard. All ratings and progress are bound to your local profile.
 *   **Multi-Platform Stats**: Link and track your handle profiles on:
-    *   Codeforces (Rating, Rank, Rating Change)
-    *   LeetCode (Rating, Rank)
-    *   AtCoder (Rating, Rank)
-    *   CodeChef (Rating, Stars, Rank)
-*   **Contest Scheduler**: Automatically pulls upcoming contests from all platforms.
-*   **🔔 Desktop Alarms**: Click the bell next to any upcoming contest to schedule a Windows notification sound/toast 5 minutes before it starts. Clicking the notification opens the contest page.
+    *   **Codeforces** (Rating, Rank, Rating Change, Problems Upsolved)
+    *   **LeetCode** (Rating, Rank, solved count by topic)
+    *   **AtCoder** (Rating, Rank, rating change)
+    *   **CodeChef** (Rating, Stars, Rank, rating change)
+*   **Contest Scheduler**: Automatically pulls upcoming contests from all 4 platforms in one schedule widget.
+*   **🔔 Desktop Alarms**: Click the bell icon next to any upcoming contest to schedule a system notification toast 5 minutes before it starts. Clicking the notification opens the contest link.
 *   **🔄 Force Sync**: Click "Sync Now" to fetch live ratings and contest updates immediately (with a 3-minute cooldown to prevent API rate-limiting).
 *   **Dark Mode**: Sleek dark theme by default, toggles to light theme seamlessly.
+
+---
+
+## 📂 Understanding the Folder & Files
+
+To make setup as simple as possible, we have created **easy-to-use helper scripts** right in the root folder. You don't need to open any terminal or write any code:
+
+*   ⚙️ **`install_dependencies.bat`** – Run this **first and only once**. It automatically downloads and installs all necessary packages, configures your database, and builds the extension.
+*   🖥️ **`run_project.bat`** – Run this to start the backend server in a command window. Keep it open in the background while using the extension.
+*   🌐 **`add_extension.bat`** – Run this to automatically launch Google Chrome with your CP Extension preloaded.
+*   👻 **`run_invisible.vbs`** – Runs the backend server silently in the background with **no command prompt window visible** on your screen.
+*   📌 **`enable_startup.bat`** – Run this **once** to make the backend server start silently in the background every time you turn on your laptop.
+*   ❌ **`disable_startup.bat`** – Run this to stop the backend server from automatically starting with Windows.
+
+---
+
+## 📖 A-Z Setup Guide (For Zero-Knowledge Users)
+
+Follow these exact steps to get your extension up and running in under 5 minutes:
+
+### 1️⃣ Step 1: Install the Prerequisites
+Before running the scripts, make sure you have these two things installed:
+1.  **Node.js**: Download and install Node.js (Version 18 or higher) from [nodejs.org](https://nodejs.org/). Just use the default installation settings.
+2.  **Google Chrome**: Make sure you have Google Chrome installed on your computer.
+
+---
+
+### 2️⃣ Step 2: One-Time Installation
+1.  Double-click the file named **`install_dependencies.bat`**.
+2.  A command window will pop up and start installing packages and setting up the local database. This might take 1–2 minutes.
+3.  Once the script prints **`SUCCESS: Installation completed successfully!`**, press any key to close the window.
+
+---
+
+### 3️⃣ Step 3: Start the Backend & Load the Extension
+1.  Double-click the file named **`run_project.bat`** to start the local backend server (or run it silently/automatically via the instructions below).
+2.  Double-click the file named **`add_extension.bat`**.
+3.  Google Chrome will automatically open with the **CP Extension** loaded!
+4.  In Chrome, click the **Puzzle Piece Icon** (Extensions menu) in the top-right toolbar and pin **CP Extension** for easy, one-click access!
+
+---
+
+## 🌟 Advanced: Silent Run & Auto-Start with Windows
+
+If you don't want to manually launch the backend server every time or keep a Command Prompt window open on your taskbar:
+
+### 👻 Running Silently
+Instead of running `run_project.bat`, double-click **`run_invisible.vbs`**. The server will start running silently in the background without opening any command window.
+
+### 📌 Starting Automatically on Windows Boot
+1.  Double-click the file named **`enable_startup.bat`**.
+2.  *That's it!* This registers the server to run silently in the background every time you log into your computer.
+3.  To stop the auto-start behavior, simply double-click **`disable_startup.bat`**.
+
+> [!TIP]
+> **How to stop the background server:**
+> Since the silent and startup modes run without a window, you can stop the server by opening your **Task Manager** (`Ctrl + Shift + Esc`), finding the **`Node.js JavaScript Runtime`** task, and clicking **End Task**.
 
 ---
 
@@ -27,93 +84,3 @@ This project features a lightweight **TypeScript Express** backend connected to 
 *   **Frontend**: React, TypeScript, Vite, Vanilla CSS
 *   **Database**: SQLite (`test.db`)
 *   **Browser Integration**: Chrome Extension Manifest V3 (Alarms, Storage, Notifications)
-
----
-
-## 📖 Step-by-Step Setup Guide (For 0-Knowledge Users)
-
-Follow these exact steps to get the project running on your computer.
-
-### Step 1: Install Prerequisites
-
-Before starting, you must install:
-1.  **Node.js**: Download and install Node.js (version 18 or higher) from [nodejs.org](https://nodejs.org/). This lets you run the servers.
-2.  **Google Chrome**: (Or any Chromium-based browser like Edge or Brave) to run the extension.
-
----
-
-### Step 2: Set Up the Backend Server
-
-The backend acts as the engine that scrapes profiles and syncs contest data.
-
-1.  Open your command line / terminal (e.g., Command Prompt, PowerShell, or Git Bash).
-2.  Navigate to the `backend` folder:
-    ```bash
-    cd backend
-    ```
-3.  **Install dependencies**:
-    *   *Note: In Node.js, dependencies are installed using `npm install` instead of Python's `pip install -r requirements.txt`.*
-    ```bash
-    npm install
-    ```
-4.  **Create database configurations**:
-    Inside the `backend` folder, verify that a file named `.env` exists. If not, create one and paste this line:
-    ```env
-    DATABASE_URL="file:./test.db"
-    PORT=8000
-    ```
-5.  **Initialize the Database**:
-    Setup the SQLite database and create the tables:
-    ```bash
-    npx prisma db push
-    ```
-6.  **Start the Backend server**:
-    ```bash
-    npm run dev
-    ```
-    *You should see a message saying:* `CP EXTENSION EXPRESS BACKEND LIVE ON PORT 8000`. Keep this terminal window open.
-
----
-
-### Step 3: Set Up the Frontend (Chrome Extension)
-
-Compile the extension code so Google Chrome can load it.
-
-1.  Open a **new** terminal window (so the backend server remains running in the background).
-2.  Navigate to the `frontend` folder:
-    ```bash
-    cd frontend
-    ```
-3.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
-4.  **Build the extension**:
-    Compile the React code into static files:
-    ```bash
-    npm run build
-    ```
-    This creates a new folder called **`dist`** inside the `frontend` directory.
-
----
-
-### Step 4: Install the Extension in Google Chrome
-
-1.  Open Google Chrome.
-2.  Go to the extensions management page by entering this in the URL bar:
-    ```text
-    chrome://extensions/
-    ```
-3.  In the top-right corner, toggle the **Developer Mode** switch to **ON**.
-4.  In the top-left corner, click the **Load unpacked** button.
-5.  Navigate to your project folder, select the `frontend/dist` directory, and click **Select Folder** (or Open).
-6.  Click the extension puzzle piece icon in Chrome toolbar and pin **CP Extension** for easy access!
-
----
-
-## 🎯 How to Use the Extension
-
-1.  **Open CP Extension**: Click the extension icon. It opens directly to your dashboard.
-2.  **Link Profiles**: Type your competitive programming handle/username next to each platform in the "Linked Profiles" section and click **Link**. It will fetch your statistics instantly.
-3.  **Sync Data**: Click the **🔄 Sync Now** button next to "Linked Profiles" to manually fetch updated ratings. It has a 3-minute cooldown timer to keep you safe from platform API blocks.
-4.  **Toggle Alarms**: Find a contest in "Upcoming Contests" and click the **🔕 Muted Bell** icon. It will change to a **🔔 Active Bell**. 5 minutes before the contest starts, a desktop notification toast will play a sound. Click the toast to open the contest page!

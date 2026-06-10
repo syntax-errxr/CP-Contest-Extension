@@ -60,3 +60,19 @@ model UserContestParticipation {
   @@unique([userId, contestId])
 }
 
+model SolvedProblem {
+  id        Int      @id @default(autoincrement())
+  userId    String   @map("user_id")
+  platform  String   // "codeforces", "leetcode", "atcoder", "codechef"
+  problemId String   @map("problem_id")
+  title     String
+  rating    Int?
+  topicTags String?  @map("topic_tags")
+  solvedAt  DateTime @map("solved_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, platform, problemId])
+}
+
+
