@@ -15,7 +15,10 @@ COPY . .
 # Generate Prisma Client
 RUN npx prisma generate
 
+# Build TypeScript code
+RUN npm run build
+
 EXPOSE 8000
 
-# Start Express with ts-node-dev for hot-reloading in development
-CMD ["npm", "run", "dev"]
+# Start Express in production mode
+CMD ["npm", "start"]

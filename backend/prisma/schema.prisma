@@ -1,5 +1,5 @@
 datasource db {
-  provider = "sqlite" // prisma db push will sync with local test.db. When deploying to postgres, we configure the provider or DATABASE_URL env
+  provider = "postgresql" // prisma db push will sync with local test.db. When deploying to postgres, we configure the provider or DATABASE_URL env
   url      = env("DATABASE_URL")
 }
 
